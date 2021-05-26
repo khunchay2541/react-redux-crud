@@ -1,9 +1,29 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
-export default class AllPost extends Component {
+import Post from './Post'
+import EditComponent from './EditComponent'
+
+ class AllPost extends Component {
   render() {
     return (
-      <div> Allpost </div>
+      <div> 
+        <h1>All post</h1>
+        {this.props.posts.map((post)=> (
+          <div key={post.id}>
+            {post.editing ? <EditComponent key={post.id} post={post}/> : <Post key={post.id} post={post}/> }
+          </div>
+        ))}
+      </div>
+     
     );
   }
 }
+
+const mapStateToProps = (state ) => {
+  return {
+    posts: state
+  }
+}
+
+export default connect(mapStateToProps)( AllPost);
